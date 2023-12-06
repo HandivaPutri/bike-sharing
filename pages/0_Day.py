@@ -12,45 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
+from typing import Any
 
+# import library
+
+import pandas as pd
 import numpy as np
+# import matplotlib.pyplot as plt
+# import seaborn as sns
 
 import streamlit as st
 from streamlit.hello.utils import show_code
 
 
-def plotting_demo():
-    progress_bar = st.sidebar.progress(0)
-    status_text = st.sidebar.empty()
-    last_rows = np.random.randn(1, 1)
-    chart = st.line_chart(last_rows)
+def days_df() -> None:
 
-    for i in range(1, 101):
-        new_rows = last_rows[-1, :] + np.random.randn(5, 1).cumsum(axis=0)
-        status_text.text("%i%% Complete" % i)
-        chart.add_rows(new_rows)
-        progress_bar.progress(i)
-        last_rows = new_rows
-        time.sleep(0.05)
-
-    progress_bar.empty()
+    days_df = pd.read_csv("https://raw.githubusercontent.com/HandivaPutri/submission/main/day.csv")
+days_df.head() # untuk menampilkan 5 baris pertama
 
     # Streamlit widgets automatically run the script from top to bottom. Since
     # this button is not connected to any other logic, it just causes a plain
     # rerun.
-    st.button("Re-run")
+    # st.button("Re-run")
 
 
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
-st.markdown("# Plotting Demo")
-st.sidebar.header("Plotting Demo")
+st.set_page_config(page_title="Day", page_icon="📹")
+st.markdown("# Day")
+st.markdown("## Data Wrangling")
+st.markdown("### Gathering Data")
+
 st.write(
-    """This demo illustrates a combination of plotting and animation with
-Streamlit. We're generating a bunch of random numbers in a loop for around
-5 seconds. Enjoy!"""
+    """This app shows how you can use Streamlit to build cool animations.
+It displays an animated fractal based on the the Julia Set. Use the slider
+to tune different parameters."""
 )
+st.sidebar.header("Day")
 
-plotting_demo()
+days_df()
 
-show_code(plotting_demo)
+show_code(days_df)
